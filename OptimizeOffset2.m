@@ -3,9 +3,6 @@ function []=OptimizeOffset2()
 % This function searches for the best frame offset to ensure a robust 
 % calibration for wild primate leaping data.
 
-% Change the camera that is 0 offset based on the current offset
-% Show video name in results
-
 % #####################
 % ## IMPORT THE DATA ##
 % #####################
@@ -62,12 +59,12 @@ dltCoefs=dltCoefs(:,vidOrder);
 % 3) Save out median rmse and # of digitized frames to results matrix
 
 nPts=size(KmtcData,2)/nCams/2;
-if nPts==14 || nPts==15 % trial from 3D leaping data coding; just extract neck (pt 7) and tail (pt 10)
+if nPts==14 || nPts==15 || nPts==16 % trial from 3D leaping data coding; just extract neck (pt 7) and tail (pt 10)
     NeckPtSt=1+(7-1)*nCams*2; TailPtSt=1+(10-1)*nCams*2;
     KmtcData=[KmtcData(:,NeckPtSt:(NeckPtSt+nCams*2-1)),...
         KmtcData(:,TailPtSt:(TailPtSt+nCams*2-1))];
 elseif nPts~=2
-    uiwait(msgbox(sprintf('Incorrect number of points (should be 2 or 14). This file has %u points.',...
+    uiwait(msgbox(sprintf('Incorrect number of points (should be 2, 14, 15, or 16). This file has %u points.',...
         nPts),'Incorrect Number of Points','error','modal'));
     return
 end
